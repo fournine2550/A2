@@ -14,12 +14,17 @@ def setup():
 def draw():
     background(240)
 
-def create_1darray(length):
-    if length <=0:
-        return []
-    return[0]+create_1darray(length-1)
-
-def create_2darray(cols, rows):
-    if cols <= 0:
-        return []                                 
-    return [create_1darray(rows)] + create_2d_array(cols - 1, rows)
+def init_board():
+    global board, current_player, game_over, winner
+    board = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+    current_player = 1                            
+    game_over = False                             
+    winner = 0
