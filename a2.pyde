@@ -143,3 +143,5 @@ def check_full_board():
             return False
         c += 1
     return True
+
+def check_board_win():
