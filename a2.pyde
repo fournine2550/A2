@@ -64,3 +64,25 @@ def draw_grid_2d():
             
             r += 1  
         c += 1
+
+def draw_ui():
+    textSize(20)
+    textAlign(LEFT, CENTER)
+    
+    if game_over == False:
+        if current_player == 1:
+            fill(0)
+            text("Turn: Black Player", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+        else:
+            fill(120)
+            text("Turn: White Player", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+    else:
+        if winner == 1:
+            fill(0)
+            text("BLACK WINS! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+        elif winner == 2:
+            fill(120)
+            text("WHITE WINS! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+        else:
+            fill(80)
+            text("DRAW GAME! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
