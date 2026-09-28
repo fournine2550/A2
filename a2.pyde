@@ -9,6 +9,9 @@ current_player = 1
 gameover = False  
 winner = 0
 
+black_score = 0
+white_score = 0
+
 def setup():
     size(700, 600)
     init_board()
@@ -67,9 +70,13 @@ def draw_grid_2d():
         c += 1
 
 def draw_ui():
-    textSize(20)
+    textSize(18)
+    textAlign(LEFT, BOTTOM)
+
+    fill(0)
+    text("SCORE - Black: " + str(black_score) + " | White: " + str(white_score), OFFSET_X, OFFSET_Y - 15)
+
     textAlign(LEFT, CENTER)
-    
     if game_over == False:
         if current_player == 1:
             fill(0)
@@ -87,3 +94,44 @@ def draw_ui():
         else:
             fill(80)
             text("DRAW GAME! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+
+def mousePressed():
+    global current_player, game_over
+    
+    if game_over == True:
+        init_board()
+        return
+        
+    if mouseX >= OFFSET_X and mouseX < OFFSET_X + GRID_COLS * CELL_SIZE:
+        col = int((mouseX - OFFSET_X) / CELL_SIZE)
+        if drop_disc(col) == True:
+            check_game_over()
+            if game_over == False:
+                if current_player == 1:
+                    current_player =2
+                else:
+                    current_player = 1
+
+def drop_disc(col):
+    r = GRID_ROWS - 1
+    while r >= 0:
+        if board[col][r] == 0:
+            board[col][r] = current_player
+            return True
+        r -= 1
+    return False
+
+def check_game_over():
+    global game_over, winner, black_score, white_score
+    if check_board_win() == True:
+        game_over = True
+        winner = current_player
+        
+        if winner == 1:
+            black_score += 1
+        elif winner == 2:
+            white_score += 1
+            
+    elif check_full_board():
+        game_over = True
+        winner = 0
