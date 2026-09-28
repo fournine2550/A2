@@ -16,6 +16,7 @@ def setup():
 def draw():
     background(240)
     draw_grid_2d()
+    draw_ui()
 
 def init_board():
     global board, current_player, gameover, winner 
