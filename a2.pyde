@@ -71,29 +71,29 @@ def draw_grid_2d():
 
 def draw_ui():
     textSize(18)
+    
     textAlign(LEFT, BOTTOM)
-
     fill(0)
-    text("SCORE - Black: " + str(black_score) + " | White: " + str(white_score), OFFSET_X, OFFSET_Y - 15)
+    text("SCORE - Black: " + str(black_score) + " | White: " + str(white_score), off_x, off_y - 15)
 
     textAlign(LEFT, CENTER)
-    if game_over == False:
+    if gameover == False:
         if current_player == 1:
             fill(0)
-            text("Turn: Black Player", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+            text("Turn: Black Player | Press 'S' to Save, 'L' to Load", off_x, off_y + row * cellsize + 35)
         else:
             fill(120)
-            text("Turn: White Player", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+            text("Turn: White Player | Press 'S' to Save, 'L' to Load", off_x, off_y + row * cellsize + 35)
     else:
         if winner == 1:
             fill(0)
-            text("BLACK WINS! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+            text("BLACK WINS! (Click to restart)", off_x, off_y + row * cellsize + 35)
         elif winner == 2:
             fill(120)
-            text("WHITE WINS! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+            text("WHITE WINS! (Click to restart)", off_x, off_y + row * cellsize + 35)
         else:
             fill(80)
-            text("DRAW GAME! (Click to restart)", OFFSET_X, OFFSET_Y + GRID_ROWS * CELL_SIZE + 35)
+            text("DRAW GAME! (Click to restart)", off_x, off_y + row * cellsize + 35)
 
 def mousePressed():
     global current_player, game_over
@@ -102,8 +102,8 @@ def mousePressed():
         init_board()
         return
         
-    if mouseX >= OFFSET_X and mouseX < OFFSET_X + GRID_COLS * CELL_SIZE:
-        col = int((mouseX - OFFSET_X) / CELL_SIZE)
+    if mouseX >= off_x and mouseX < off_x + collum * cellsize:
+        col = int((mouseX - off_x) / cellsize)
         if drop_disc(col) == True:
             check_game_over()
             if game_over == False:
@@ -113,7 +113,7 @@ def mousePressed():
                     current_player = 1
 
 def drop_disc(col):
-    r = GRID_ROWS - 1
+    r = row - 1
     while r >= 0:
         if board[col][r] == 0:
             board[col][r] = current_player
@@ -135,3 +135,11 @@ def check_game_over():
     elif check_full_board():
         game_over = True
         winner = 0
+
+def check_full_board():
+    c = 0
+    while c < GRID_COLS:
+        if board[c][0] == 0:
+            return False
+        c += 1
+    return True
