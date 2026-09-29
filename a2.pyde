@@ -145,3 +145,7 @@ def check_full_board():
     return True
 
 def check_board_win():
+def check_direction(c, r, dc, dr, player):
+def save_game():
+def load_game():
+def keyPressed():
