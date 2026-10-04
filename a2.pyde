@@ -145,6 +145,20 @@ def check_full_board():
     return True
 
 def check_board_win():
+    c = 0
+    while c < collum:
+        r = 0
+        while r < row:
+            p = board[c][r]
+            if p != 0:
+                if (check_direction(c, r, 1, 0, p) or 
+                    check_direction(c, r, 0, 1, p) or 
+                    check_direction(c, r, 1, 1, p) or 
+                    check_direction(c, r, 1, -1, p)):
+                    return True
+            r += 1
+        c += 1
+    return False
 def check_direction(c, r, dc, dr, player):
 def save_game():
 def load_game():
