@@ -96,9 +96,9 @@ def draw_ui():
             text("DRAW GAME! (Click to restart)", off_x, off_y + row * cellsize + 35)
 
 def mousePressed():
-    global current_player, game_over
+    global current_player, gameover
     
-    if game_over == True:
+    if gameover == True:
         init_board()
         return
         
@@ -106,7 +106,7 @@ def mousePressed():
         col = int((mouseX - off_x) / cellsize)
         if drop_disc(col) == True:
             check_game_over()
-            if game_over == False:
+            if gameover == False:
                 if current_player == 1:
                     current_player =2
                 else:
@@ -122,9 +122,9 @@ def drop_disc(col):
     return False
 
 def check_game_over():
-    global game_over, winner, black_score, white_score
+    global gameover, winner, black_score, white_score
     if check_board_win() == True:
-        game_over = True
+        gameover = True
         winner = current_player
         
         if winner == 1:
@@ -133,12 +133,12 @@ def check_game_over():
             white_score += 1
             
     elif check_full_board():
-        game_over = True
+        gameover = True
         winner = 0
 
 def check_full_board():
     c = 0
-    while c < GRID_COLS:
+    while c < collum:
         if board[c][0] == 0:
             return False
         c += 1
@@ -160,6 +160,16 @@ def check_board_win():
         c += 1
     return False
 def check_direction(c, r, dc, dr, player):
+    step = 0
+    while step < 4:
+        nc = c + dc * step
+        nr = r + dr * step
+        if nc < 0 or nc >= collum or nr < 0 or nr >= row:
+            return False
+        if board[nc][nr] != player:
+            return False
+        step += 1
+    return True
 def save_game():
 def load_game():
 def keyPressed():
