@@ -170,6 +170,72 @@ def check_direction(c, r, dc, dr, player):
             return False
         step += 1
     return True
+
 def save_game():
+    global board, current_player, gameover, black_score, white_score
+
+    board_string = ""
+    c = 0
+    while c < collum:
+        r = 0
+        while r < row:
+            board_string += str(board[c][r])
+            r += 1
+        c += 1
+            
+    save_data = board_string + "|" + str(current_player) + "|" + str(black_score) + "|" + str(white_score)
+    
+    save_path = sketchPath("c4_save.txt")
+    
+    with open(save_path, "w") as f:
+        f.write(save_data)
+    print("[ระบบ]: บันทึกเกมและคะแนนสำเร็จแล้ว!")
+
 def load_game():
+    global board, current_player, gameover, winner, black_score, white_score
+    
+    save_path = sketchPath("c4_save.txt")
+    
+    if not os.path.exists(save_path):
+        print("[ระบบ]: ไม่พบไฟล์เซฟ")
+        return
+        
+    try:
+        with open(save_path, "r") as f:
+            save_data = f.read()
+            
+        parts = save_data.split("|")
+        board_part = parts[0]
+        current_player = int(parts[1])
+        
+        if len(parts) >= 4:
+            black_score = int(parts[2])
+            white_score = int(parts[3])
+            
+        gameover = False
+        winner = 0
+        
+        new_board = []
+        idx = 0
+        c = 0
+        while c < collum:
+            col_data = []
+            r = 0
+            while r < row:
+                col_data.append(int(board_part[idx]))
+                idx += 1
+                r += 1
+            new_board.append(col_data)
+            c += 1
+            
+        board = new_board
+        print("[ระบบ]: โหลดเกมและคะแนนสำเร็จแล้ว!")
+        
+    except Exception as e:
+        print("[ข้อผิดพลาด]: ไฟล์เซฟเสียหาย:", e)
+
 def keyPressed():
+    if key == 's' or key == 'S':
+        save_game()
+    elif key == 'l' or key == 'L':
+        load_game()
