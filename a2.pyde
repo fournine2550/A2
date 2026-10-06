@@ -189,7 +189,7 @@ def save_game():
     
     with open(save_path, "w") as f:
         f.write(save_data)
-    print("[ระบบ]: บันทึกเกมและคะแนนสำเร็จแล้ว!")
+    print("[System]: Game and scores saved successfully!")
 
 def load_game():
     global board, current_player, gameover, winner, black_score, white_score
@@ -197,7 +197,7 @@ def load_game():
     save_path = sketchPath("c4_save.txt")
     
     if not os.path.exists(save_path):
-        print("[ระบบ]: ไม่พบไฟล์เซฟ")
+        print("[System]: Save file not found.")
         return
         
     try:
@@ -229,10 +229,10 @@ def load_game():
             c += 1
             
         board = new_board
-        print("[ระบบ]: โหลดเกมและคะแนนสำเร็จแล้ว!")
+        print("[System]: Game and scores loaded successfully!")
         
     except Exception as e:
-        print("[ข้อผิดพลาด]: ไฟล์เซฟเสียหาย:", e)
+        print("[Error]: Save file is corrupted:", e)
 
 def keyPressed():
     if key == 's' or key == 'S':
